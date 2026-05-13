@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>artilust — Quiet Atelier for Illustration Editions · Visual Mockup v2</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@200;300;400;500;700;900&family=Noto+Sans:ital,wght@0,300;0,400;0,500;0,700;0,900;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bone: #F4EFE6;
+    --bone-2: #EAE4D8;
+    --bone-3: #DDD5C3;
+    --white: #FFFFFF;
+    --ink: #1F1E18;
+    --ink-2: #33302A;
+    --crimson: #B23A2C;
+    --crimson-2: #8E2E22;
+    --grey: #8A857A;
+    --line: #D8D2C2;
+    --display: 'Noto Sans KR', 'Noto Sans', system-ui, sans-serif;
+    --sans: 'Noto Sans KR', 'Noto Sans', system-ui, sans-serif;
+    --mono: 'Noto Sans', 'Noto Sans KR', monospace; /* mono replaced with thin sans per request */
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: var(--bone); color: var(--ink); font-family: var(--sans); font-weight: 400; }
+  body { line-height: 1.55; -webkit-font-smoothing: antialiased; }
+
+  /* ─── Doc shell ─────────────────────────────────────── */
+  .doc-header {
+    padding: 28px 36px 12px;
+    display: flex; align-items: center; justify-content: space-between;
+    border-bottom: 1px solid var(--line);
+  }
+  .doc-header .doc-title { font-family: var(--display); font-size: 22px; font-weight: 500; }
+  .doc-header .doc-meta { font-family: var(--sans); font-size: 11px; font-weight: 300; color: var(--grey); letter-spacing: 0.12em; text-transform: uppercase; }
+
+  .section-divider {
+    margin: 80px 0 0;
+    padding: 22px 36px 14px;
+    border-top: 1px solid var(--line);
+    background: var(--bone);
+    display: flex; align-items: baseline; justify-content: space-between;
+  }
+  .section-divider .tag { font-family: var(--sans); font-size: 10.5px; font-weight: 500; color: var(--crimson); letter-spacing: 0.22em; text-transform: uppercase; }
+  .section-divider .title { font-family: var(--display); font-size: 28px; font-weight: 500; }
+  .section-divider .crumb { font-family: var(--sans); font-size: 10.5px; font-weight: 300; color: var(--grey); letter-spacing: 0.08em; }
+
+  /* ─── Frame (browser chrome) ────────────────────────── */
+  .frame { margin: 18px 36px 0; border: 1px solid var(--line); border-radius: 6px; overflow: hidden; background: var(--white); box-shadow: 0 8px 28px rgba(31,30,24,0.06); }
+  .frame .chrome { display:flex; align-items:center; gap:8px; padding: 10px 14px; background: #F8F4EB; border-bottom: 1px solid var(--line); font-family: var(--sans); font-size: 11px; font-weight: 300; color: var(--grey); }
+  .frame .chrome .dots span { display:inline-block; width:9px; height:9px; border-radius:50%; margin-right:5px; background:#D5CCB6; }
+  .frame .chrome .url { margin-left: 14px; padding: 3px 12px; background:var(--white); border:1px solid var(--line); border-radius:18px; }
+
+  .page { background: var(--bone); }
+
+  /* ─── GNB ─── */
+  .gnb { display: grid; grid-template-columns: 180px 1fr auto; align-items: center; padding: 20px 38px; border-bottom: 1px solid var(--line); background: var(--bone); }
+  .logo { font-family: var(--display); font-size: 26px; font-weight: 700; letter-spacing: 0.01em; color: var(--ink); }
+  .logo .dot { color: var(--crimson); font-size: 30px; vertical-align: -2px; }
+  .gnb nav { display: flex; gap: 26px; justify-content: center; }
+  .gnb nav a { font-family: var(--sans); font-size: 13px; color: var(--ink); text-decoration: none; letter-spacing: 0.02em; font-weight: 500; position: relative; }
+  .gnb nav a.active::after { content:""; position:absolute; bottom:-6px; left:0; right:0; height:2px; background: var(--crimson); }
+  .gnb .actions { display:flex; gap: 14px; align-items: center; font-family: var(--sans); font-size: 11.5px; font-weight: 400; color: var(--ink); letter-spacing: 0.08em; }
+  .pill { padding: 6px 14px; border:1px solid var(--ink); border-radius: 999px; }
+  .pill.crimson { background: var(--crimson); color: var(--white); border-color: var(--crimson); }
+
+  /* ─── HERO ─── */
+  .hero { display: grid; grid-template-columns: 5fr 7fr; align-items: stretch; border-bottom: 1px solid var(--line); min-height: 560px; }
+  .hero-left { padding: 70px 56px 56px; display: flex; flex-direction: column; justify-content: center; gap: 22px; }
+  .hero-eyebrow { font-family: var(--sans); font-weight: 500; font-size: 11px; letter-spacing: 0.24em; color: var(--crimson); text-transform: uppercase; }
+  .hero h1 { font-family: var(--display); font-weight: 700; font-size: 60px; line-height: 1.08; letter-spacing: -0.005em; color: var(--ink); }
+  .hero h1 em { font-style: italic; color: var(--crimson); font-weight: 400; }
+  .hero-sub { font-family: var(--sans); font-weight: 300; font-size: 16px; color: var(--ink-2); max-width: 440px; line-height: 1.65; }
+  .hero-cta { display:flex; align-items:center; gap: 16px; margin-top: 8px; }
+  .btn { font-family: var(--sans); font-weight: 500; font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; padding: 14px 22px; background: var(--ink); color: var(--white); border: 0; cursor: pointer; }
+  .btn.crimson { background: var(--crimson); }
+  .btn .wax { width:8px; height:8px; background: var(--white); border-radius: 50%; display:inline-block; margin-right: 10px; vertical-align: middle; }
+  .btn.ghost { background: transparent; color: var(--ink); border: 1px solid var(--ink); }
+
+  .hero-right { background: var(--bone-2); position: relative; overflow: hidden; }
+  .hero-collage { position: absolute; inset: 0; padding: 36px; display: grid; grid-template-columns: 2fr 1.4fr; grid-template-rows: 1fr 1fr; gap: 18px; }
+  .hero-collage .art-1 { grid-row: 1 / span 2; }
+  .crimson-mark { position: absolute; top: 26px; right: 28px; width: 76px; height: 76px; border-radius: 50%; background: var(--crimson); color: var(--white); display:flex; align-items:center; justify-content:center; font-family: var(--display); font-size: 12px; font-weight: 500; line-height: 1.1; text-align:center; letter-spacing: 0.05em; transform: rotate(-8deg); box-shadow: 0 6px 16px rgba(178,58,44,0.32); z-index: 2; }
+
+  /* ─── Tile (image card) ─── */
+  .tile { background: var(--white); border:1px solid var(--line); position: relative; overflow: hidden; }
+  .art-img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .tile .label { position: absolute; bottom: 0; left: 0; right: 0; padding: 12px 14px 14px; background: linear-gradient(to top, rgba(31,30,24,0.86), rgba(31,30,24,0)); color: var(--white); display:flex; justify-content:space-between; align-items:flex-end; font-family: var(--sans); font-weight: 300; font-size: 10.5px; letter-spacing: 0.04em; }
+  .tile .label .t-title { font-family: var(--display); font-weight: 600; font-size: 14px; letter-spacing: 0; }
+
+  /* ─── Rows ─── */
+  .row { padding: 70px 56px; border-bottom: 1px solid var(--line); }
+  .row.dark { background: var(--ink); color: var(--bone); }
+  .row-head { display:flex; align-items: baseline; justify-content: space-between; margin-bottom: 28px; }
+  .row-head .eyebrow { font-family: var(--sans); font-weight: 500; font-size: 11px; letter-spacing: 0.24em; color: var(--crimson); text-transform: uppercase; }
+  .row-head h2 { font-family: var(--display); font-weight: 700; font-size: 34px; letter-spacing: -0.005em; }
+  .row-head .more { font-family: var(--sans); font-weight: 500; font-size: 11.5px; letter-spacing: 0.1em; color: inherit; text-decoration: none; border-bottom: 1px solid currentColor; padding-bottom: 2px; }
+
+  /* Curation grid */
+  .cur-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 18px; }
+  .cur-card { background: var(--white); border: 1px solid var(--line); display: flex; flex-direction: column; }
+  .cur-thumb { aspect-ratio: 4/5; position: relative; overflow: hidden; background: var(--bone-2); }
+  .cur-meta { padding: 14px 16px 18px; display: flex; flex-direction: column; gap: 4px; }
+  .cur-meta .artist { font-family: var(--sans); font-weight: 500; font-size: 10.5px; color: var(--crimson); letter-spacing: 0.08em; text-transform: uppercase; }
+  .cur-meta .work-title { font-family: var(--display); font-weight: 600; font-size: 16.5px; line-height: 1.3; color: var(--ink); }
+  .cur-meta .price { font-family: var(--sans); font-weight: 400; font-size: 11.5px; color: var(--ink-2); margin-top: 6px; display:flex; justify-content: space-between; letter-spacing: 0.04em; }
+  .cur-meta .size { color: var(--grey); }
+  .badge { position: absolute; top: 10px; left: 10px; background: var(--crimson); color: var(--white); padding: 4px 8px; font-family: var(--sans); font-weight: 500; font-size: 9.5px; letter-spacing: 0.14em; text-transform: uppercase; }
+  .badge.ink { background: var(--ink); }
+  .src-tag { position: absolute; bottom: 6px; right: 8px; font-family: var(--sans); font-weight: 300; font-size: 9px; color: rgba(255,255,255,0.7); letter-spacing: 0.04em; z-index: 2; }
+
+  /* Mood cards — 액자(frame) 레이아웃 */
+  .mood-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+  .mood-card {
+    aspect-ratio: 1/1.18; border: 1px solid var(--line); padding: 18px 18px 18px;
+    display: grid; grid-template-rows: 1fr auto; gap: 14px;
+    background: var(--bone); position: relative;
+  }
+  .mood-frame {
+    background: var(--white); padding: 12px; box-shadow: 0 2px 8px rgba(31,30,24,0.08);
+    overflow: hidden; display: flex; align-items: center; justify-content: center;
+    min-height: 0;
+  }
+  .mood-frame img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .mood-meta { display: flex; flex-direction: column; gap: 4px; }
+  .mood-card .name { font-family: var(--display); font-weight: 700; font-size: 22px; line-height: 1; }
+  .mood-card .desc { font-family: var(--sans); font-weight: 300; font-size: 10px; color: var(--grey); letter-spacing: 0.12em; text-transform: uppercase; }
+  /* Tonal swatches stay — but now hold the framed artwork */
+  .mood-card.dreamy .mood-meta .desc { color: rgba(244,239,230,0.65); }
+  .mood-card.refined .mood-meta .desc { color: rgba(244,239,230,0.6); }
+  .mood-card.dreamy .name, .mood-card.refined .name { color: var(--bone); }
+  .mood-card.dreamy .mood-frame, .mood-card.refined .mood-frame { background: rgba(244,239,230,0.95); }
+  .mood-card.warm { background: #E8D7C2; }
+  .mood-card.calm { background: #D4DCE3; }
+  .mood-card.quiet { background: #EFEBE0; }
+  .mood-card.dreamy { background: #2A2C46; color: var(--bone); }
+  .mood-card.dreamy .desc { color: rgba(244,239,230,0.65); }
+  .mood-card.witty { background: #F2D9CC; }
+  .mood-card.lovely { background: #F1D2D6; }
+  .mood-card.fresh { background: #C9D9C4; }
+  .mood-card.refined { background: #1F1E18; color: var(--bone); }
+  .mood-card.refined .desc { color: rgba(244,239,230,0.6); }
+
+  /* Space grid — 공간 사진 배경 + 그라데이션 */
+  .space-grid { display: grid; grid-template-columns: repeat(6,1fr); gap: 14px; }
+  .space-tile {
+    aspect-ratio: 1/1; border: 1px solid var(--line); position: relative;
+    overflow: hidden; background: var(--bone-2);
+    transition: box-shadow 0.25s ease-out;
+  }
+  .space-tile img.art-img {
+    position: absolute; inset: 0; width: 100%; height: 100%;
+    object-fit: cover; display: block;
+    filter: saturate(0.92);
+  }
+  .space-tile::after {
+    content: ""; position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(31,30,24,0.78) 0%, rgba(31,30,24,0.05) 55%, rgba(31,30,24,0.25) 100%);
+    pointer-events: none;
+  }
+  .space-tile .name {
+    position: absolute; left: 16px; bottom: 12px; z-index: 2;
+    font-family: var(--display); font-weight: 700; font-size: 22px;
+    color: var(--bone); letter-spacing: -0.005em;
+    text-shadow: 0 1px 8px rgba(31,30,24,0.4);
+  }
+  .space-tile .meta {
+    position: absolute; right: 14px; top: 12px; z-index: 2;
+    font-family: var(--sans); font-weight: 500; font-size: 10px;
+    color: rgba(244,239,230,0.92); letter-spacing: 0.12em; text-transform: uppercase;
+    background: rgba(31,30,24,0.42); padding: 4px 8px; backdrop-filter: blur(2px);
+  }
+  .space-tile:hover { box-shadow: 0 6px 18px rgba(31,30,24,0.18); }
+
+  /* Artists row */
+  .artist-grid { display: grid; grid-template-columns: repeat(6,1fr); gap: 18px; }
+  .artist-card { background: var(--bone); border: 1px solid var(--line); padding: 18px; display:flex; flex-direction:column; gap: 12px; }
+  .artist-card .avatar { width: 60px; height: 60px; border-radius: 50%; background: var(--ink); color: var(--bone); display:flex; align-items:center; justify-content:center; font-family: var(--display); font-size: 22px; font-weight: 700; position: relative; }
+  .artist-card .avatar::after { content:""; position:absolute; top:2px; right:2px; width:10px; height:10px; border-radius:50%; background: var(--crimson); animation: blink 2.4s ease-in-out infinite; }
+  @keyframes blink { 0%, 70%, 100% { opacity: 1; } 80% { opacity: 0.3; } }
+  .artist-card .name { font-family: var(--display); font-weight: 600; font-size: 18px; }
+  .artist-card .tags { font-family: var(--sans); font-weight: 300; font-size: 10px; color: var(--grey); letter-spacing: 0.08em; text-transform: uppercase; }
+  .artist-card .follow { font-family: var(--sans); font-weight: 500; font-size: 11px; color: var(--crimson); margin-top: auto; border-top: 1px solid var(--line); padding-top: 10px; letter-spacing: 0.08em; text-transform: uppercase; }
+
+  /* Limited */
+  .lim-wrap { display: grid; grid-template-columns: 4fr 3fr; gap: 28px; }
+  .lim-feature { background: var(--ink); color: var(--bone); padding: 36px; display: grid; grid-template-columns: 1fr 1fr; gap: 28px; align-items: center; }
+  .lim-art { aspect-ratio: 4/5; background: var(--bone-2); border: 1px solid #2C2B25; overflow: hidden; }
+  .lim-feature .lim-info .eyebrow { font-family: var(--sans); font-weight: 500; color: #E8C8C2; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; }
+  .lim-feature h3 { font-family: var(--display); font-weight: 700; font-size: 30px; margin: 12px 0 14px; line-height: 1.15; }
+  .lim-feature .artist { font-family: var(--sans); font-weight: 400; font-size: 11.5px; color: rgba(244,239,230,0.7); letter-spacing: 0.04em; }
+  .lim-feature .lim-meta { margin-top: 18px; font-family: var(--sans); font-size: 12px; display:grid; grid-template-columns: 1fr 1fr; gap: 10px; color: rgba(244,239,230,0.78); }
+  .lim-feature .lim-meta .k { color: rgba(244,239,230,0.45); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 500; }
+  .lim-feature .count { margin-top: 22px; display:flex; align-items:baseline; gap: 12px; font-family: var(--sans); font-size: 11px; color: #E8C8C2; letter-spacing: 0.08em; text-transform: uppercase; }
+  .lim-feature .count strong { font-family: var(--display); font-size: 38px; font-weight: 700; color: var(--bone); }
+  .lim-feature .count .bar { flex: 1; height: 4px; background: rgba(244,239,230,0.15); position: relative; }
+  .lim-feature .count .bar i { position:absolute; left:0; top:0; bottom:0; width: 36%; background: var(--crimson); }
+  .lim-feature .cta { margin-top: 24px; }
+  .lim-side { display:flex; flex-direction:column; gap: 14px; }
+  .lim-side .card { background: var(--bone); border:1px solid var(--line); padding: 16px; display:grid; grid-template-columns: 84px 1fr auto; gap: 14px; align-items: center; }
+  .lim-side .card .thumb { width:84px; height:84px; overflow: hidden; border: 1px solid var(--line); }
+  .lim-side .card .t { font-family: var(--display); font-weight: 600; font-size: 14px; line-height: 1.2; }
+  .lim-side .card .a { font-family: var(--sans); font-weight: 500; font-size: 10px; color: var(--crimson); letter-spacing: 0.1em; text-transform: uppercase; }
+  .lim-side .card .p { font-family: var(--sans); font-size: 12px; }
+
+  /* Curator note row */
+  .twocol { display: grid; grid-template-columns: 5fr 7fr; gap: 36px; align-items: center; }
+  .note-card { padding-right: 24px; }
+  .note-card .label { font-family: var(--sans); font-weight: 500; font-size: 10.5px; letter-spacing: 0.22em; color: var(--crimson); text-transform: uppercase; }
+  .note-card h3 { font-family: var(--display); font-weight: 700; font-size: 30px; margin: 14px 0 16px; line-height: 1.2; }
+  .note-card .by { font-family: var(--sans); font-weight: 400; font-size: 11.5px; color: var(--grey); margin-bottom: 14px; letter-spacing: 0.08em; }
+  .note-card p { font-family: var(--sans); font-weight: 300; font-size: 15px; line-height: 1.75; color: var(--ink-2); }
+  .note-art { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; }
+  .note-art .tile { aspect-ratio: 4/5; }
+
+  /* Gift */
+  .gift-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+  .gift-card { border: 1px solid var(--line); background: var(--white); padding: 24px; display:flex; flex-direction:column; gap: 14px; }
+  .gift-card .price-tier { font-family: var(--display); font-weight: 700; font-size: 26px; }
+  .gift-card .price-tier em { color: var(--crimson); font-style: normal; }
+  .gift-card .desc { font-family: var(--sans); font-weight: 300; font-size: 13px; color: var(--ink-2); line-height: 1.65; }
+  .gift-card .gift-art { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; aspect-ratio: 3/1; }
+  .gift-card .cta { font-family: var(--sans); font-weight: 500; font-size: 11px; color: var(--crimson); margin-top: auto; border-top: 1px dashed var(--line); padding-top: 12px; letter-spacing: 0.1em; text-transform: uppercase; }
+
+  /* Why */
+  .why-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 22px; }
+  .why-card { padding: 26px; border: 1px solid var(--line); background: var(--bone); }
+  .why-card .num { font-family: var(--sans); font-weight: 500; font-size: 11px; color: var(--crimson); letter-spacing: 0.22em; }
+  .why-card h4 { font-family: var(--display); font-weight: 700; font-size: 21px; margin: 10px 0 10px; }
+  .why-card p { font-family: var(--sans); font-weight: 300; font-size: 12.5px; line-height: 1.65; color: var(--ink-2); }
+
+  /* Footer */
+  footer.site { padding: 60px 56px 36px; background: var(--ink); color: var(--bone); }
+  footer.site .top { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr 1fr; gap: 28px; padding-bottom: 36px; border-bottom: 1px solid rgba(244,239,230,0.15); }
+  footer.site h5 { font-family: var(--sans); font-weight: 500; font-size: 10.5px; letter-spacing: 0.22em; color: #C9C2B2; margin-bottom: 12px; text-transform: uppercase; }
+  footer.site a { color: var(--bone); text-decoration: none; font-size: 13px; font-weight: 300; display:block; padding: 4px 0; }
+  footer.site .logo-big { font-family: var(--display); font-size: 44px; font-weight: 700; }
+  footer.site .tagline { font-family: var(--sans); font-weight: 300; color: #C9C2B2; max-width: 280px; margin-top: 10px; font-size: 13.5px; line-height: 1.6; }
+  footer.site .bottom { padding-top: 22px; display:flex; justify-content: space-between; font-family: var(--sans); font-weight: 300; font-size: 10.5px; color: rgba(244,239,230,0.45); letter-spacing: 0.08em; text-transform: uppercase; }
+
+  /* Detail */
+  .detail { display: grid; grid-template-columns: 7fr 5fr; gap: 0; background: var(--bone); }
+  .detail-left { padding: 56px 56px 40px; background: var(--white); border-right: 1px solid var(--line); }
+  .detail-main { aspect-ratio: 4/5; background: var(--bone-2); border: 1px solid var(--line); position: relative; overflow: hidden; }
+  .detail-thumbs { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin-top: 14px; }
+  .detail-thumbs .t { aspect-ratio: 1/1; background: var(--bone-2); border: 1px solid var(--line); cursor: pointer; overflow: hidden; }
+  .detail-thumbs .t.active { border-color: var(--crimson); outline: 1px solid var(--crimson); outline-offset: -2px; }
+
+  .detail-right { padding: 56px 48px; display: flex; flex-direction: column; gap: 18px; }
+  .detail-artist { display:flex; align-items: center; gap: 10px; font-family: var(--sans); font-weight: 500; font-size: 11px; letter-spacing: 0.16em; color: var(--crimson); text-transform: uppercase; }
+  .detail-artist .dot { width:7px; height:7px; background: var(--crimson); border-radius: 50%; }
+  .detail-title { font-family: var(--display); font-weight: 700; font-size: 42px; line-height: 1.1; }
+  .detail-meta { font-family: var(--sans); font-weight: 400; font-size: 12px; color: var(--grey); display: flex; gap: 18px; letter-spacing: 0.06em; text-transform: uppercase; }
+  .detail-price { font-family: var(--display); font-weight: 700; font-size: 32px; margin-top: 6px; }
+  .detail-price .currency { font-family: var(--sans); font-weight: 400; font-size: 14px; color: var(--grey); vertical-align: 8px; margin-right: 4px; }
+  .opt-label { font-family: var(--sans); font-weight: 500; font-size: 10.5px; color: var(--grey); letter-spacing: 0.16em; text-transform: uppercase; margin-bottom: 8px; }
+  .opt-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+  .opt { border: 1px solid var(--ink); padding: 12px 10px; text-align: center; cursor: pointer; background: var(--white); font-family: var(--sans); font-weight: 500; font-size: 11.5px; letter-spacing: 0.06em; }
+  .opt.active { background: var(--ink); color: var(--bone); }
+  .opt small { display:block; font-size: 9.5px; font-weight: 300; color: var(--grey); margin-top: 2px; }
+  .opt.active small { color: rgba(244,239,230,0.5); }
+
+  .cta-row { display: grid; grid-template-columns: 2fr 1fr; gap: 10px; }
+  .icon-row { display:flex; gap: 14px; font-family: var(--sans); font-weight: 400; font-size: 11.5px; color: var(--ink-2); margin-top: 4px; }
+
+  .info-block { border-top: 1px solid var(--line); padding-top: 18px; margin-top: 10px; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; font-family: var(--sans); font-size: 12px; }
+  .info-block .k { color: var(--grey); font-size: 10px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; }
+  .info-block .v { color: var(--ink); font-weight: 400; }
+
+  .curator-block { background: var(--bone); border-left: 3px solid var(--crimson); padding: 22px 24px; margin-top: 16px; }
+  .curator-block .head { font-family: var(--sans); font-weight: 500; font-size: 10.5px; letter-spacing: 0.2em; color: var(--crimson); text-transform: uppercase; }
+  .curator-block .body { font-family: var(--sans); font-weight: 300; font-size: 14.5px; line-height: 1.7; color: var(--ink-2); margin-top: 8px; }
+  .curator-block .sig { font-family: var(--sans); font-weight: 400; font-size: 10.5px; color: var(--grey); margin-top: 10px; letter-spacing: 0.08em; }
+
+  /* Artist hero */
+  .artist-hero { display: grid; grid-template-columns: 5fr 7fr; gap: 0; border-bottom: 1px solid var(--line); min-height: 480px; background: var(--bone); }
+  .artist-hero .left { padding: 70px 56px; display:flex; flex-direction: column; justify-content: center; gap: 18px; }
+  .artist-hero .right { background: var(--bone-2); position: relative; }
+  .artist-hero .right .studio { position: absolute; inset: 32px; background: var(--ink); border: 1px solid var(--ink-2); overflow: hidden; }
+  .artist-hero .badge-line { font-family: var(--sans); font-weight: 500; font-size: 11px; letter-spacing: 0.22em; color: var(--crimson); text-transform: uppercase; }
+  .artist-hero h1 { font-family: var(--display); font-weight: 700; font-size: 72px; line-height: 1; }
+  .artist-hero .one-liner { font-family: var(--sans); font-weight: 300; font-size: 18px; max-width: 480px; line-height: 1.65; color: var(--ink-2); }
+  .artist-hero .stats { display:flex; gap: 28px; font-family: var(--sans); font-weight: 400; font-size: 11px; color: var(--ink-2); margin-top: 4px; letter-spacing: 0.14em; text-transform: uppercase; }
+  .artist-hero .stats strong { font-family: var(--display); font-weight: 700; font-size: 26px; color: var(--ink); display:block; letter-spacing: 0; text-transform: none; }
+  .artist-hero .cta-line { display:flex; gap: 12px; margin-top: 6px; }
+  .artist-hero .cta-line .btn { padding: 12px 18px; font-size: 11px; }
+  .artist-body { padding: 70px 56px; border-bottom: 1px solid var(--line); }
+
+  .doc-foot { text-align:center; padding: 50px 0 80px; font-family: var(--sans); font-weight: 300; font-size: 10.5px; color: var(--grey); letter-spacing: 0.16em; text-transform: uppercase; }
+  .doc-foot a { color: var(--crimson); text-decoration: none; }
+
+  /* Attribution strip */
+  .attrib { padding: 24px 36px; background: var(--bone-2); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); font-family: var(--sans); font-weight: 300; font-size: 10.5px; color: var(--grey); line-height: 1.7; letter-spacing: 0.04em; }
+  .attrib strong { font-weight: 500; color: var(--ink-2); }
+  .attrib a { color: var(--crimson); text-decoration: none; }
+</style>
+</head>
+<body>
+
+<div class="doc-header">
+  <div class="doc-title">artilust — Quiet Atelier for Illustration Editions</div>
+  <div class="doc-meta">VISUAL MOCKUP v2  ·  2026.05  ·  REF1 × REF3 HYBRID  ·  NOTO SANS SYSTEM</div>
+</div>
+
+
+<div class="section-divider">
+  <span class="tag">01 / SCREEN</span>
+  <span class="title">Home — Today’s Curation</span>
+  <span class="crumb">artilust.com/</span>
+</div>
+<div class="frame">
+  <div class="chrome"><span class="dots"><span></span><span></span><span></span></span><span class="url">artilust.com</span></div>
+  <div class="page">
+    <header class="gnb">
+      <div class="logo">artilust<span class="dot">.</span></div>
+      <nav>
+        <a href="#" class="active">Home</a>
+        <a href="#">New</a><a href="#">Curations</a><a href="#">Artists</a>
+        <a href="#">Works</a><a href="#">Journal</a><a href="#">About</a>
+      </nav>
+      <div class="actions">
+        <span>SEARCH</span>
+        <span class="pill">SIGN IN</span>
+        <span class="pill crimson">CART · 02</span>
+      </div>
+    </header>
+
+    <section class="hero">
+      <div class="hero-left">
+        <div class="hero-eyebrow">QUIET ATELIER  ·  EST. 2026</div>
+        <h1>Art for your wall,<br><em>by the artists closest to you.</em></h1>
+        <p class="hero-sub">An illustration atelier, curated with the eye of an offline gallery. Discover work through the artist’s world, the mood of your space, and a curator’s quiet recommendation.</p>
+        <div class="hero-cta">
+          <button class="btn crimson"><span class="wax"></span>큐레이션 보기</button>
+          <button class="btn ghost">작가 둘러보기 →</button>
+        </div>
+      </div>
+      <div class="hero-right">
+        <div class="crimson-mark">EDITION<br>2026 / I</div>
+        <div class="hero-collage">
+
+          <div class="tile art-1"><img class="art-img" loading="lazy" referrerpolicy="no-referrer" src="https://commons.wikimedia.org/wiki/Special:FilePath/Jan_Vermeer_-_Girl_Reading_a_Letter_at_an_Open_Window.JPG?width=1000" alt="A Room with Blue Light" /><div class="label"><span class="t-title">A Room with Blue Light</span><span>김다은 · A2</span></div></div>
+          <div class="tile"><img class="art-img" loading="lazy" referrerpolicy="no-referrer" src="https://commons.wikimedia.org/wiki/Special:FilePath/Sparrow_and_magnolia-IMG_9330.JPG?width=600" alt="Two Cats on Beige" /><div class="label"><span class="t-title">Two Cats on Beige</span><span>이도아</span></div></div>
+          <div class="tile"><img class="art-img" loading="lazy" referrerpolicy="no-referrer" src="https://commons.wikimedia.org/wiki/Special:FilePath/Tulip_redoute.JPG?width=600" alt="Crimson Tulip Study" /><div class="label"><span class="t-title">Crimson Tulip Study</span><span>신윤아</span></div></div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- TODAY'S CURATION -->
+    <section class="row">
+      <div class="row-head">
+        <div>
+          <div class="eyebrow">TODAY’S CURATION  ·  W19 / 2026</div>
+          <h2>처음 사는 그림, 12점.</h2>
+        </div>
+        <a href="#" class="more">VIEW ALL 12  →</a>
+      </div>
+      <div class="cur-grid">
+
+        <div class="cur-card"><div class="cur-thumb"><span class="badge ink">CURATOR’S PICK</span><img class="art-img" loading="lazy" referrerpolicy="no-referrer" src="https://commons.wikimedia.org/wiki/Special:FilePath/Jan_Vermeer_-_Girl_Reading_a_Letter_at_an_Open_Window.JPG?width=600" alt="A Room with Blue Light" /></div>
+          <div class="cur-meta">
+            <div class="artist">● 김다은</div>
+            <div class="work-title">A Room with Blue Light</div>
+            <div class="price"><span>180,000</span><span class="size">A2 · Ed. 50</span></div>
+          </div></div>
+        <div class="cur-card"><div class="cur-thumb"><span class="badge">NEW</span><img class="art-img" loading="lazy" referrerpolicy="no-referrer" src="https://commons.wikimedia.org/wiki/Special:FilePath/Jan_van_Huysum_-_Still_Life_of_Flowers_and_Fruit_-_Google_Art_Project.jpg?width=600" alt="Tangerine Afternoon" /></div>
+          <div class="cur-meta">
+            <div class="artist">● 오하영</div>
+            <div class="work-title">Tangerine Afternoon</div>
+            <div class="price"><span>140,000</span><span class="size">A3 · Ed. 80</span></div>
+          </div></div>
+        <div class="cur-card"><div class="cur-thumb"><img class="art-img" loading="lazy" referrerpolicy="no-referrer" src="https://commons.wikimedia.org/wiki/Special:FilePath/Jan_Davidszoon_de_Heem,_Still-life_with_Books_and_Skull_(Vanitas).JPG?width=600" alt="Quiet Bookshelf" /></div>
+          <div class="cur-meta">
+            <div class="artist">● 정세호</div>
+            <div class="work-title">Quiet Bookshelf</div>
+            <div class="price"><span>160,000</span><span class="size">A3 · Ed. 60</span></div>
+          </div></div>
+        <div class="cur-card"><div class="cur-thumb"><span class="badge">GIFT</span><img class="art-img" loading="lazy" referrerpolicy="no-referrer" src="https://commons.wikimedia.org/wiki/Special:FilePath/Sparrow_and_magnolia-IMG_9330.JPG?width=600" alt="Two Cats on Beige" /></div>
+          <div class="cur-meta">
+            <div class="artist">● 이도아</div>
+            <div class="work-title">Two Cats on Beige</div>
+            <div class="price"><span>220,000</span><span class="size">A2 · Ed. 40</span></div>
+          </div></div>
+        <div class="cur-card"><div class="cur-thumb"><img class="art-img" loading="lazy" referrerpolicy="no-referrer" src="https://commons.wikimedia.org/wiki/Special:FilePath/Alfons_Mucha_-_Fruit.jpg?width=600" alt="Garden After Rain" /></div>
+          <div class="cur-meta">
+            <div class="artist">● 박지운</div>
+            <div class="work-title">Garden After Rain</div>
+            <div class="price"><span>190,000</span><span class="size">A2 · Ed. 50</span></div>
+          </div></div>
+        <div class="cur-card"><div class="cur-thumb"><span class="badge ink">LIMITED</span><img class="art-img" loading="lazy" referrerpolicy="no-referrer" src="https://commons.wikimedia.org/wiki/Special:FilePath/Hiroshige-100-views-of-edo-fox-fires.jpg?width=600" alt="Mid-night Constellation" /></div>
+          <div class="cur-meta">
+            <div class="artist">● 유서영</div>
+            <div class="work-title">Mid-night Constellation</div>
+            <div class="price"><span>240,000</span><span class="size">A2 · Ed. 30</span></div>
+          </div></div>
+      </div>
+    </section>
+
+    <!-- SHOP BY MOOD -->
+    <section class="row">
+      <div class="row-head">
+        <div>
+          <div class="eyebrow">SHOP BY MOOD</div>
+          <h2>오늘 당신의 공기.</h2>
+        </div>
+      </div>
+
+      <div class="mood-grid">
+        <div class="mood-card warm"><div class="mood-frame"><img class="art-img" loading="lazy" referrerpolicy="no-referrer" src="https://commons.wikimedia.org/wiki/Special:FilePath/Jan_van_Huysum_-_Still_Life_of_Flowers_and_Fruit_-_Google_Art_Project.jpg?width=400" alt="Tangerine Afternoon" /></div><div class="mood-meta"><span class="name">따뜻한</span><span class="desc">BEIGE · BROWN  ·  24 WORKS</span></div></div>
+        <div class="mood-card calm"><div class="mood-frame"><img class="art-img" loading="lazy" referrerpolicy="no-referrer" src="https://commons.wikimedia.org/wiki/Special:FilePath/Jan_Vermeer_-_Girl_Reading_a_Letter_at_an_Open_Window.JPG?width=400" alt="A Room with Blue Light" /></div><div class="mood-meta"><span class="name">차분한</span><span class="desc">BLUE · GREY  ·  31 WORKS</span></div></div>
+        <div class="mood-card quiet"><div class="mood-frame"><img class="art-img" loading="lazy" referrerpolicy="no-referrer" src="https://commons.wikimedia.org/wiki/Special:FilePath/Johannes_Vermeer_-_The_lacemaker_(c.1669-1671).jpg?width=400" alt="White Linen Window" /></div><div class="mood-meta"><span class="name">고요한</span><span class="desc">OFF-WHITE  ·  18 WORKS</span></div></div>
+        <div class="mood-card dreamy"><div class="mood-frame"><img class="art-img" loading="lazy" referrerpolicy="no-referrer" src="https://commons.wikimedia.org/wiki/Special:FilePath/Hiroshige-100-views-of-edo-fox-fires.jpg?width=400" alt="Mid-night Constellation" /></div><div class="mood-meta"><span class="name">몽환적인</span><span class="desc">NIGHT BLUE  ·  14 WORKS</span></div></div>
+        <div class="mood-card witty"><div class="mood-frame"><img class="art-img" loading="lazy" referrerpolicy="no-referrer" src="https://commons.wikimedia.org/wiki/Special:FilePath/Toulouse_Lautrec_A-Montrouge_Rosa_la_Rouge.jpg?width=400" alt="Coffee at 7:42" /></div><div class="mood-meta"><span class="name">위트 있는</span><span class="desc">POP COLOR  ·  12 WORKS</span></div></div>
+        <div class="mood-card lovely"><div class="mood-frame"><img class="art-img" loading="lazy" referrerpolicy="no-referrer" src="https://commons.wikimedia.org/wiki/Special:FilePath/Vintage_Travel_Poster_Paris_France_Orient_Express.svg?width=400" alt="Pink Hour, Sea Side" /></div><div class="mood-meta"><span class="name">사랑스러운</span><span class="desc">PINK  ·  22 WORKS</span></div></div>
+        <div class="mood-card fresh"><div class="mood-frame"><img class="art-img" loading="lazy" referrerpolicy="no-referrer" src="https://commons.wikimedia.org/wiki/Special:FilePath/Alfons_Mucha_-_Fruit.jpg?width=400" alt="Garden After Rain" /></div><div class="mood-meta"><span class="name">생기 있는</span><span class="desc">YELLOW · GREEN  ·  17 WORKS</span></div></div>
+        <div class="mood-card refined"><div class="mood-frame"><img class="art-img" loading="lazy" referrerpolicy="no-referrer" src="https://commons.wikimedia.org/wiki/Special:FilePath/Alte_Nationalgalerie,_Henri_de_Toulouse-Lautrec,_Clown.JPG?width=400" alt="Velvet Crimson, No.9" /></div><div class="mood-meta"><span class="name">세련된</span><span class="desc">BLACK · MONO  ·  19 WORKS</span></div></div>
+      </div>
+
+    </section>
+
+    <!-- SHOP BY SPACE -->
+    <section class="row">
+      <div class="row-head">
+        <div>
+          <div class="eyebrow">SHOP BY SPACE</div>
+          <h2>당신의 벽, 어디에 걸까요.</h2>
+        </div>
+      </div>
+      <div class="space-grid">
+        <div class="space-tile"><img class="art-img" loading="lazy" referrerpolicy="no-referrer" src="https://images.unsplash.com/photo-1756302637887-1c00e98fd0cc?fm=jpg&q=70&w=900&auto=format&fit=crop" alt="거실 — Cozy living room with leather sofa and fireplace by Clay Banks" /><span class="meta">12 작품</span><span class="name">거실</span></div>
+        <div class="space-tile"><img class="art-img" loading="lazy" referrerpolicy="no-referrer" src="https://images.unsplash.com/photo-1724582586413-6b69e1c94a17?fm=jpg&q=70&w=900&auto=format&fit=crop" alt="침실 — A bedroom with a bed and a table by Prydumano Design" /><span class="meta">9 작품</span><span class="name">침실</span></div>
+        <div class="space-tile"><img class="art-img" loading="lazy" referrerpolicy="no-referrer" src="https://images.unsplash.com/photo-1741880861439-348d9ad18c44?fm=jpg&q=70&w=900&auto=format&fit=crop" alt="서재 — Modern desk setup with a window and bookshelf by Li Zhang" /><span class="meta">7 작품</span><span class="name">서재</span></div>
+        <div class="space-tile"><img class="art-img" loading="lazy" referrerpolicy="no-referrer" src="https://images.unsplash.com/photo-1600493505500-afac3fc363e6?fm=jpg&q=70&w=900&auto=format&fit=crop" alt="아이방 — White wooden bed frame — kids bedroom by Collov Home Design" /><span class="meta">6 작품</span><span class="name">아이방</span></div>
+        <div class="space-tile"><img class="art-img" loading="lazy" referrerpolicy="no-referrer" src="https://images.unsplash.com/photo-1749871615234-98bff62995ba?fm=jpg&q=70&w=900&auto=format&fit=crop" alt="카페 — A cozy cafe interior with warm lighting and furniture by Kouji Tsuru" /><span class="meta">5 작품</span><span class="name">카페</span></div>
+        <div class="space-tile"><img class="art-img" loading="lazy" referrerpolicy="no-referrer" src="https://images.unsplash.com/photo-1742198810079-49bb51d1c5af?fm=jpg&q=70&w=900&auto=format&fit=crop" alt="오피스 — A modern and well-organized home office by Huy Phan" /><span class="meta">8 작품</span><span class="name">오피스</span></div>
+      </div>
+    </section>
+
+    <!-- FEATURED ARTISTS -->
+    <section class="row">
+      <div class="row-head">
+        <div>
+          <div class="eyebrow">FEATURED ARTISTS  ·  6 OF 30</div>
+          <h2>이번 주, 아틀리에의 작가들.</h2>
+        </div>
+        <a href="#" class="more">SEE ALL ARTISTS  →</a>
+      </div>
+      <div class="artist-grid">
+        <div class="artist-card"><div class="avatar">다은</div><div class="name">김다은</div><div class="tags">Quiet Interior · Blue</div><div class="follow">+ FOLLOW  ·  2.4k</div></div>
+        <div class="artist-card"><div class="avatar">하영</div><div class="name">오하영</div><div class="tags">Warm Tone · Lifestyle</div><div class="follow">+ FOLLOW  ·  1.1k</div></div>
+        <div class="artist-card"><div class="avatar">세호</div><div class="name">정세호</div><div class="tags">Still Life · Mono</div><div class="follow">+ FOLLOW  ·  3.2k</div></div>
+        <div class="artist-card"><div class="avatar">도아</div><div class="name">이도아</div><div class="tags">Animal · Lovely</div><div class="follow">+ FOLLOW  ·  5.6k</div></div>
+        <div class="artist-card"><div class="avatar">지운</div><div class="name">박지운</div><div class="tags">Plant · Green</div><div class="follow">+ FOLLOW  ·  900</div></div>
+        <div class="artist-card"><div class="avatar">서영</div><div class="name">유서영</div><div class="tags">Night · Dream</div><div class="follow">+ FOLLOW  ·  4.1k</div></div>
+      </div>
+    </section>
+
+    <!-- LIMITED EDITIONS -->
+    <section class="row dark">
+      <div class="row-head">
+        <div>
+          <div class="eyebrow" style="color:#E8C8C2">LIMITED EDITIONS  ·  CLOSING SOON</div>
+          <h2 style="color:var(--bone)">사라지기 전, 한 점.</h2>
+        </div>
+        <a href="#" class="more" style="color:#C9C2B2">ALL DROPS  →</a>
+      </div>
+      <div class="lim-wrap">
+        <div class="lim-feature">
+
+          <div class="lim-art"><img class="art-img" loading="lazy" referrerpolicy="no-referrer" src="https://commons.wikimedia.org/wiki/Special:FilePath/Hiroshige-100-views-of-edo-fox-fires.jpg?width=900" alt="Mid-night Constellation" /></div>
+          <div class="lim-info">
+            <div class="eyebrow">DROP #03  ·  EDITION 30</div>
+            <h3>Mid-night Constellation</h3>
+            <div class="artist">유서영 — Limited Edition of 30</div>
+            <div class="lim-meta">
+              <div><div class="k">SIZE</div>A2 · 420 × 594mm</div>
+              <div><div class="k">PAPER</div>Giclée · Hahnemühle 308gsm</div>
+              <div><div class="k">SIGNED</div>Yes · COA Included</div>
+              <div><div class="k">SHIP</div>5–7 business days</div>
+            </div>
+            <div class="count">
+              <strong>11</strong>
+              <div>OF 30 REMAINING</div>
+              <div class="bar"><i style="width:36%"></i></div>
+            </div>
+            <button class="btn crimson cta"><span class="wax"></span>구매하기 · ₩240,000</button>
+          </div>
+        </div>
+        <div class="lim-side">
+
+          <div class="card">
+            <div class="thumb"><img class="art-img" loading="lazy" referrerpolicy="no-referrer" src="https://commons.wikimedia.org/wiki/Special:FilePath/Alte_Nationalgalerie,_Henri_de_Toulouse-Lautrec,_Clown.JPG?width=200" alt="Velvet Crimson, No.9" /></div>
+            <div><div class="a">● 한가람</div><div class="t">Velvet Crimson, No.9</div></div>
+            <div class="p">Ed. 20</div>
+          </div>
+          <div class="card">
+            <div class="thumb"><img class="art-img" loading="lazy" referrerpolicy="no-referrer" src="https://commons.wikimedia.org/wiki/Special:FilePath/Katsushika_Hokusai_-_Fine_Wind,_Clear_Morning_(Gaif%C5%AB_kaisei)_-_Google_Art_Project.jpg?width=200" alt="Mountain in Mist" /></div>
+            <div><div class="a">● 황도현</div><div class="t">Mountain in Mist</div></div>
+            <div class="p">Ed. 25</div>
+          </div>
+          <div class="card">
+            <div class="thumb"><img class="art-img" loading="lazy" referrerpolicy="no-referrer" src="https://commons.wikimedia.org/wiki/Special:FilePath/Vintage_Travel_Poster_Paris_France_Orient_Express.svg?width=200" alt="Pink Hour, Sea Side" /></div>
+            <div><div class="a">● 임수안</div><div class="t">Pink Hour, Sea Side</div></div>
+            <div class="p">Ed. 60</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CURATOR'S NOTE -->
+    <section class="row">
+      <div class="twocol">
+        <div class="note-card">
+          <div class="label">CURATOR’S NOTE  ·  ISSUE 04</div>
+          <h3>혼자 있는 시간을 위한 그림 9점.</h3>
+          <div class="by">CURATED BY  ·  아틀리에 큐레이터 정선아</div>
+          <p>그림은 시끄러운 방을 더 시끄럽게 만들기도, 조용한 방을 더 조용하게 만들기도 합니다. 이번 큐레이션은 후자입니다. 작은 침실, 책상 옆 벽, 1인용 거실의 단 한 점을 골라야 할 때, 시선이 오래 머물 수 있는 작품들을 모았습니다. 색은 절제되었고, 작가의 손은 차분합니다.</p>
+        </div>
+        <div class="note-art">
+
+          <div class="tile"><img class="art-img" loading="lazy" referrerpolicy="no-referrer" src="https://commons.wikimedia.org/wiki/Special:FilePath/Johannes_Vermeer_-_The_lacemaker_(c.1669-1671).jpg?width=500" alt="White Linen Window" /><div class="label"><span class="t-title">White Linen Window</span><span>장유진</span></div></div>
+          <div class="tile"><img class="art-img" loading="lazy" referrerpolicy="no-referrer" src="https://commons.wikimedia.org/wiki/Special:FilePath/Johannes_Vermeer,_donna_col_liuto,_1662-63_ca._01.JPG?width=500" alt="Reading Lamp, Eight PM" /><div class="label"><span class="t-title">Reading Lamp, Eight PM</span><span>정세호</span></div></div>
+          <div class="tile"><img class="art-img" loading="lazy" referrerpolicy="no-referrer" src="https://commons.wikimedia.org/wiki/Special:FilePath/Henri_R._de_Toulouse-Lautrec_-_Two_Friends_-_Google_Art_Project.jpg?width=500" alt="City Window, 21:08" /><div class="label"><span class="t-title">City Window, 21:08</span><span>윤재이</span></div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- GIFT GUIDE -->
+    <section class="row" style="background: var(--bone-2);">
+      <div class="row-head">
+        <div>
+          <div class="eyebrow">GIFT GUIDE  ·  이번 시즌의 선물</div>
+          <h2>너무 흔하지 않은 한 점.</h2>
+        </div>
+        <a href="#" class="more">전체 가격대  →</a>
+      </div>
+      <div class="gift-row">
+
+        <div class="gift-card" >
+          <div class="price-tier" ><em >10만 원대</em> 첫 선물</div>
+          <div class="desc" >첫 컬렉터에게, 부담 없는 한 점. 카드·포장 포함, 즉시 배송 가능 작품 위주.</div>
+          <div class="gift-art">
+            <div class="tile"><img class="art-img" loading="lazy" referrerpolicy="no-referrer" src="https://commons.wikimedia.org/wiki/Special:FilePath/Tulip_redoute.JPG?width=200" alt="Crimson Tulip Study" /></div>
+            <div class="tile"><img class="art-img" loading="lazy" referrerpolicy="no-referrer" src="https://commons.wikimedia.org/wiki/Special:FilePath/Toulouse_Lautrec_A-Montrouge_Rosa_la_Rouge.jpg?width=200" alt="Coffee at 7:42" /></div>
+            <div class="tile"><img class="art-img" loading="lazy" referrerpolicy="no-referrer" src="https://commons.wikimedia.org/wiki/Special:FilePath/Illustration_of_a_Poem_by_Kiyohara_no_Motosuke,_by_Suzuki_Harunobu,_Edo_period,_18th_century_-_Tokyo_National_Museum_-_DSC06279.JPG?width=200" alt="Boy and Origami Crane" /></div>
+          </div>
+          <div class="cta" >→ GO TO COLLECTION</div>
+        </div>
+        <div class="gift-card" >
+          <div class="price-tier" ><em >20만 원대</em> 핵심 볼륨</div>
+          <div class="desc" >집들이·신혼 선물의 ‘딱 좋은 한 점’. 프레임 옵션 포함, A2 사이즈 인기.</div>
+          <div class="gift-art">
+            <div class="tile"><img class="art-img" loading="lazy" referrerpolicy="no-referrer" src="https://commons.wikimedia.org/wiki/Special:FilePath/John_F._Francis_-_Still_life,_fruit_and_wine_glass.jpg?width=200" alt="Two Cups, Same Table" /></div>
+            <div class="tile"><img class="art-img" loading="lazy" referrerpolicy="no-referrer" src="https://commons.wikimedia.org/wiki/Special:FilePath/'Flower_Still-life'_by_Willem_van_Aelst,_Cincinnati_Art_Museum.JPG?width=200" alt="Carnation Letter to Mom" /></div>
+            <div class="tile"><img class="art-img" loading="lazy" referrerpolicy="no-referrer" src="https://commons.wikimedia.org/wiki/Special:FilePath/Jan_van_Huysum_-_Flower_Still_Life,_c._1734_-_Google_Art_Project.jpg?width=200" alt="Spring Pattern 04" /></div>
+          </div>
+          <div class="cta" >→ GO TO COLLECTION</div>
+        </div>
+        <div class="gift-card" style="background:var(--ink); color:var(--bone); border-color:var(--ink)">
+          <div class="price-tier" style="color:var(--bone)"><em style="color:#E8C8C2">프리미엄</em> 30만 원 이상</div>
+          <div class="desc" style="color:rgba(244,239,230,0.75)">한정 에디션·서명·인증서 포함. 결혼·개업·VIP 선물에 적합. 손글씨 카드 동봉.</div>
+          <div class="gift-art">
+            <div class="tile"><img class="art-img" loading="lazy" referrerpolicy="no-referrer" src="https://commons.wikimedia.org/wiki/Special:FilePath/Alte_Nationalgalerie,_Henri_de_Toulouse-Lautrec,_Clown.JPG?width=200" alt="Velvet Crimson, No.9" /></div>
+            <div class="tile"><img class="art-img" loading="lazy" referrerpolicy="no-referrer" src="https://commons.wikimedia.org/wiki/Special:FilePath/Katsushika_Hokusai_-_Fine_Wind,_Clear_Morning_(Gaif%C5%AB_kaisei)_-_Google_Art_Project.jpg?width=200" alt="Mountain in Mist" /></div>
+            <div class="tile"><img class="art-img" loading="lazy" referrerpolicy="no-referrer" src="https://commons.wikimedia.org/wiki/Special:FilePath/Hokusai,_trentasei_vedute_del_monte_fuji,_sotto_la_grande_onda_al_largo_della_costa_di_kanagawa,_1830-32.JPG?width=200" alt="After Tide" /></div>
+          </div>
+          <div class="cta" style="color:#E8C8C2; border-color:rgba(244,239,230,0.15)">→ GO TO COLLECTION</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- WHY EDITION -->
+    <section class="row">
+      <div class="row-head">
+        <div>
+          <div class="eyebrow">WHY EDITION PRINT</div>
+          <h2>artilust의 약속, 네 가지.</h2>
+        </div>
+      </div>
+      <div class="why-grid">
+        <div class="why-card"><div class="num">01</div><h4>Giclée Print</h4><p>전문 안료 잉크로 미세한 색감 차이까지 살린 고품질 프린트.</p></div>
+        <div class="why-card"><div class="num">02</div><h4>Hahnemühle Paper</h4><p>독일 308gsm 파인아트 종이. 100년 이상 변색 없는 보존성.</p></div>
+        <div class="why-card"><div class="num">03</div><h4>작가 서명</h4><p>한정 에디션 모든 작품에 작가 자필 서명과 에디션 번호.</p></div>
+        <div class="why-card"><div class="num">04</div><h4>인증서 (COA)</h4><p>QR 코드 기반 위변조 방지 인증서. 구매자 등록 가능.</p></div>
+      </div>
+    </section>
+
+    <footer class="site">
+      <div class="top">
+        <div>
+          <div class="logo-big">artilust<span style="color:var(--crimson)">.</span></div>
+          <div class="tagline">작가의 팬덤과 큐레이터의 안목이 만나는 일러스트 판화 아틀리에.</div>
+        </div>
+        <div><h5>EXPLORE</h5><a>New Drops</a><a>Curations</a><a>Artists</a><a>Works</a></div>
+        <div><h5>SHOP</h5><a>Space</a><a>Gift</a><a>Limited Editions</a></div>
+        <div><h5>ABOUT</h5><a>Brand</a><a>Curation Philosophy</a><a>Edition / COA</a><a>Apply as Artist</a></div>
+        <div><h5>NEWSLETTER</h5><a>매주 화요일, 큐레이터의 노트가 도착합니다.</a><a style="color:var(--crimson)">→ SUBSCRIBE</a></div>
+      </div>
+      <div class="bottom">
+        <span>© 2026 ㈜SALT&PEPPER  ·  ARTILUST</span>
+        <span>SEOUL  ·  PARIS</span>
+      </div>
+    </footer>
+  </div>
+</div>
+
+
+<div class="section-divider">
+  <span class="tag">02 / SCREEN</span>
+  <span class="title">Work Detail — A Room with Blue Light</span>
+  <span class="crumb">artilust.com/works/a-room-with-blue-light</span>
+</div>
+<div class="frame">
+  <div class="chrome"><span class="dots"><span></span><span></span><span></span></span><span class="url">artilust.com/works/a-room-with-blue-light</span></div>
+  <div class="page">
+    <header class="gnb">
+      <div class="logo">artilust<span class="dot">.</span></div>
+      <nav><a href="#">Home</a><a href="#">New</a><a href="#">Curations</a><a href="#">Artists</a><a href="#" class="active">Works</a><a href="#">Journal</a><a href="#">About</a></nav>
+      <div class="actions"><span>SEARCH</span><span class="pill">SIGN IN</span><span class="pill crimson">CART · 02</span></div>
+    </header>
+
+    <div class="detail">
+      <div class="detail-left">
+        <div class="detail-main"><img class="art-img" loading="lazy" referrerpolicy="no-referrer" src="https://commons.wikimedia.org/wiki/Special:FilePath/Jan_Vermeer_-_Girl_Reading_a_Letter_at_an_Open_Window.JPG?width=1200" alt="A Room with Blue Light" /></div>
+        <div class="detail-thumbs">
+
+          <div class="t active"><img class="art-img" loading="lazy" referrerpolicy="no-referrer" src="https://commons.wikimedia.org/wiki/Special:FilePath/Jan_Vermeer_-_Girl_Reading_a_Letter_at_an_Open_Window.JPG?width=200" alt="A Room with Blue Light" /></div>
+          <div class="t"><img class="art-img" loading="lazy" referrerpolicy="no-referrer" src="https://commons.wikimedia.org/wiki/Special:FilePath/Johannes_Vermeer,_donna_col_liuto,_1662-63_ca._01.JPG?width=200" alt="Reading Lamp, Eight PM" /></div>
+          <div class="t"><img class="art-img" loading="lazy" referrerpolicy="no-referrer" src="https://commons.wikimedia.org/wiki/Special:FilePath/Johannes_Vermeer_-_The_lacemaker_(c.1669-1671).jpg?width=200" alt="White Linen Window" /></div>
+          <div class="t"><img class="art-img" loading="lazy" referrerpolicy="no-referrer" src="https://commons.wikimedia.org/wiki/Special:FilePath/Hiroshige-100-views-of-edo-fox-fires.jpg?width=200" alt="Mid-night Constellation" /></div>
+          <div class="t"><img class="art-img" loading="lazy" referrerpolicy="no-referrer" src="https://commons.wikimedia.org/wiki/Special:FilePath/Henri_R._de_Toulouse-Lautrec_-_Two_Friends_-_Google_Art_Project.jpg?width=200" alt="City Window, 21:08" /></div>
+        </div>
+        <p style="margin-top:18px; font-family: var(--sans); font-weight: 300; font-size:11px; color:var(--grey); letter-spacing:0.1em; text-transform: uppercase;">DETAIL  ·  PAPER  ·  FRAME PREVIEW  ·  LIVING ROOM MOCK  ·  STUDIO SHOT</p>
+      </div>
+
+      <div class="detail-right">
+        <div class="detail-artist"><span class="dot"></span>김다은  ·  KIM DAEUN</div>
+        <h1 class="detail-title">A Room with<br>Blue Light</h1>
+        <div class="detail-meta"><span>2026</span><span>Edition of 50</span><span>Giclée Print</span></div>
+        <div class="detail-price"><span class="currency">₩</span>180,000</div>
+
+        <div>
+          <div class="opt-label">사이즈</div>
+          <div class="opt-row">
+            <div class="opt">A4<small>210×297mm</small></div>
+            <div class="opt active">A3<small>297×420mm</small></div>
+            <div class="opt">A2<small>420×594mm</small></div>
+          </div>
+        </div>
+        <div>
+          <div class="opt-label">프레임</div>
+          <div class="opt-row">
+            <div class="opt active">지류만<small>+ ₩0</small></div>
+            <div class="opt">우드 프레임<small>+ ₩45,000</small></div>
+            <div class="opt">블랙 프레임<small>+ ₩52,000</small></div>
+          </div>
+        </div>
+
+        <div class="cta-row">
+          <button class="btn crimson"><span class="wax"></span>구매하기 · ₩225,000</button>
+          <button class="btn ghost">선물하기</button>
+        </div>
+        <div class="icon-row"><span>♡ 찜하기 · 142</span><span>↗ 공유</span><span>↺ 공간에 담아보기</span></div>
+
+        <div class="curator-block">
+          <div class="head">CURATOR’S NOTE  ·  아틀리에 큐레이터 정선아</div>
+          <div class="body">“이 작품은 방 안의 조용한 빛을 통해 혼자 있는 시간의 밀도를 보여줍니다. 차분한 블루 톤과 절제된 구도 덕분에 침실·서재·작은 거실에 잘 어울립니다. 특히 화이트·우드톤 인테리어와 조합했을 때 공간에 과한 장식성 없이 감정의 중심을 만들어주는 작품입니다.”</div>
+          <div class="sig">— 아틀리에 큐레이션 노트 #17</div>
+        </div>
+
+        <div class="info-block">
+          <div><div class="k">PAPER</div><div class="v">Hahnemühle 308gsm</div></div>
+          <div><div class="k">EDITION</div><div class="v">Limited 50 · 14/50 남음</div></div>
+          <div><div class="k">SIGNED</div><div class="v">작가 자필 서명 + COA</div></div>
+          <div><div class="k">SHIPPING</div><div class="v">주문 후 5–7영업일</div></div>
+        </div>
+      </div>
+    </div>
+
+    <section class="row" style="background:var(--bone)">
+      <div class="row-head"><div><div class="eyebrow">ARTIST’S WORDS</div><h2>작가의 말 · 김다은</h2></div></div>
+      <div class="twocol">
+        <div class="note-card">
+          <div class="by">“혼자 있는 방의 빛을 그리는 일은, 결국 그 시간을 살아본 사람만이 할 수 있어요.”</div>
+          <p>이번 에디션은 새벽 3시와 오후 5시 사이의 빛을 모았습니다. 창가에 떨어지는 푸른 빛, 책상 위 작은 도자기, 그 옆 붉은 사과 한 점. 거대한 풍경이 아니라 작은 정물에서 ‘함께 있는 듯한’ 느낌을 그리고 싶었습니다. — 김다은</p>
+        </div>
+        <div class="note-art">
+
+          <div class="tile"><img class="art-img" loading="lazy" referrerpolicy="no-referrer" src="https://commons.wikimedia.org/wiki/Special:FilePath/Johannes_Vermeer,_donna_col_liuto,_1662-63_ca._01.JPG?width=500" alt="Reading Lamp, Eight PM" /><div class="label"><span class="t-title">Reading Lamp, Eight PM</span><span>정세호</span></div></div>
+          <div class="tile"><img class="art-img" loading="lazy" referrerpolicy="no-referrer" src="https://commons.wikimedia.org/wiki/Special:FilePath/John_F._Francis_-_Still_life,_fruit_and_wine_glass.jpg?width=500" alt="Two Cups, Same Table" /><div class="label"><span class="t-title">Two Cups, Same Table</span><span>백은조</span></div></div>
+          <div class="tile"><img class="art-img" loading="lazy" referrerpolicy="no-referrer" src="https://commons.wikimedia.org/wiki/Special:FilePath/Johannes_Vermeer_-_The_lacemaker_(c.1669-1671).jpg?width=500" alt="White Linen Window" /><div class="label"><span class="t-title">White Linen Window</span><span>장유진</span></div></div>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
+
+
+<div class="section-divider">
+  <span class="tag">03 / SCREEN</span>
+  <span class="title">Artist — 김다은</span>
+  <span class="crumb">artilust.com/@kimdaeun</span>
+</div>
+<div class="frame">
+  <div class="chrome"><span class="dots"><span></span><span></span><span></span></span><span class="url">artilust.com/@kimdaeun</span></div>
+  <div class="page">
+    <header class="gnb">
+      <div class="logo">artilust<span class="dot">.</span></div>
+      <nav><a>Home</a><a>New</a><a>Curations</a><a class="active">Artists</a><a>Works</a><a>Journal</a><a>About</a></nav>
+      <div class="actions"><span>SEARCH</span><span class="pill">SIGN IN</span><span class="pill crimson">CART · 02</span></div>
+    </header>
+
+    <section class="artist-hero">
+      <div class="left">
+        <div class="badge-line">FEATURED THIS WEEK  ·  EST. 2022</div>
+        <h1>김다은<span style="color:var(--crimson)">.</span></h1>
+        <div class="one-liner">“일상의 조용한 장면을 따뜻한 색과 선으로 기록하는 일러스트레이터. 혼자 있는 시간, 방 안의 빛, 사소한 물건들이 가진 감정을 포착합니다.”</div>
+        <div class="stats">
+          <div><strong>14</strong>WORKS</div>
+          <div><strong>2.4k</strong>FOLLOWERS</div>
+          <div><strong>320</strong>COLLECTED</div>
+          <div><strong>4</strong>EDITIONS</div>
+        </div>
+        <div class="cta-line">
+          <button class="btn crimson"><span class="wax"></span>+ FOLLOW</button>
+          <button class="btn ghost">신작 알림 받기</button>
+          <button class="btn ghost">↗ 인스타 공유</button>
+        </div>
+      </div>
+      <div class="right">
+        <div class="studio"><img class="art-img" loading="lazy" referrerpolicy="no-referrer" src="https://commons.wikimedia.org/wiki/Special:FilePath/Jan_Vermeer_-_Girl_Reading_a_Letter_at_an_Open_Window.JPG?width=1200" alt="A Room with Blue Light" /></div>
+      </div>
+    </section>
+
+    <section class="artist-body">
+      <div class="row-head">
+        <div><div class="eyebrow">SELECTED WORKS  ·  4 OF 14</div><h2>이 작가의 작품.</h2></div>
+        <a href="#" class="more">VIEW ALL 14  →</a>
+      </div>
+      <div class="cur-grid" style="grid-template-columns: repeat(4, 1fr);">
+
+        <div class="cur-card"><div class="cur-thumb"><span class="badge ink">PINNED</span><img class="art-img" loading="lazy" referrerpolicy="no-referrer" src="https://commons.wikimedia.org/wiki/Special:FilePath/Jan_Vermeer_-_Girl_Reading_a_Letter_at_an_Open_Window.JPG?width=600" alt="A Room with Blue Light" /></div>
+          <div class="cur-meta">
+            <div class="artist">● 김다은</div>
+            <div class="work-title">A Room with Blue Light</div>
+            <div class="price"><span>180,000</span><span class="size">A2 · Ed. 50</span></div>
+          </div></div>
+        <div class="cur-card"><div class="cur-thumb"><img class="art-img" loading="lazy" referrerpolicy="no-referrer" src="https://commons.wikimedia.org/wiki/Special:FilePath/Johannes_Vermeer_-_The_lacemaker_(c.1669-1671).jpg?width=600" alt="White Linen Window" /></div>
+          <div class="cur-meta">
+            <div class="artist">● 장유진</div>
+            <div class="work-title">White Linen Window</div>
+            <div class="price"><span>130,000</span><span class="size">A3 · Ed. 80</span></div>
+          </div></div>
+        <div class="cur-card"><div class="cur-thumb"><span class="badge">NEW</span><img class="art-img" loading="lazy" referrerpolicy="no-referrer" src="https://commons.wikimedia.org/wiki/Special:FilePath/Johannes_Vermeer,_donna_col_liuto,_1662-63_ca._01.JPG?width=600" alt="Reading Lamp, Eight PM" /></div>
+          <div class="cur-meta">
+            <div class="artist">● 정세호</div>
+            <div class="work-title">Reading Lamp, Eight PM</div>
+            <div class="price"><span>150,000</span><span class="size">A3 · Ed. 60</span></div>
+          </div></div>
+        <div class="cur-card"><div class="cur-thumb"><img class="art-img" loading="lazy" referrerpolicy="no-referrer" src="https://commons.wikimedia.org/wiki/Special:FilePath/John_F._Francis_-_Still_life,_fruit_and_wine_glass.jpg?width=600" alt="Two Cups, Same Table" /></div>
+          <div class="cur-meta">
+            <div class="artist">● 백은조</div>
+            <div class="work-title">Two Cups, Same Table</div>
+            <div class="price"><span>180,000</span><span class="size">A3 · Ed. 50</span></div>
+          </div></div>
+      </div>
+    </section>
+
+    <section class="row">
+      <div class="row-head"><div><div class="eyebrow">ARTIST’S RECOMMENDATION  ·  PAIR FOR YOUR WALL</div><h2>김다은이 직접 고른 2점.</h2></div></div>
+      <div class="lim-wrap">
+        <div class="lim-feature" style="background: var(--bone); color: var(--ink); border: 1px solid var(--line);">
+          <div class="lim-art" style="border-color:var(--line)"><img class="art-img" loading="lazy" referrerpolicy="no-referrer" src="https://commons.wikimedia.org/wiki/Special:FilePath/Jan_Vermeer_-_Girl_Reading_a_Letter_at_an_Open_Window.JPG?width=900" alt="A Room with Blue Light" /></div>
+          <div class="lim-info">
+            <div class="eyebrow" style="color: var(--crimson)">PAIR · A ROOM SET</div>
+            <h3 style="color: var(--ink)">A Room with Blue Light  ×  Two Cups, Same Table</h3>
+            <div class="artist" style="color: var(--grey)">함께 걸면 좋은 2점 · 약 1.2m 벽 적합</div>
+            <div class="lim-meta" style="color: var(--ink-2)">
+              <div><div class="k" style="color:var(--grey)">SIZE</div>A2 + A3</div>
+              <div><div class="k" style="color:var(--grey)">PRICE</div>₩260,000 (5% 세트 할인)</div>
+              <div><div class="k" style="color:var(--grey)">FRAME</div>우드 프레임 동일 추천</div>
+              <div><div class="k" style="color:var(--grey)">MOOD</div>차분한 + 따뜻한</div>
+            </div>
+            <button class="btn crimson cta" style="margin-top:18px"><span class="wax"></span>세트로 구매 · ₩260,000</button>
+          </div>
+        </div>
+        <div class="lim-side">
+          <div class="card"><div class="thumb"><img class="art-img" loading="lazy" referrerpolicy="no-referrer" src="https://commons.wikimedia.org/wiki/Special:FilePath/John_F._Francis_-_Still_life,_fruit_and_wine_glass.jpg?width=200" alt="Two Cups, Same Table" /></div><div><div class="a">PAIRED WITH</div><div class="t">Two Cups, Same Table</div></div><div class="p">A3</div></div>
+          <div class="card"><div class="thumb"><img class="art-img" loading="lazy" referrerpolicy="no-referrer" src="https://commons.wikimedia.org/wiki/Special:FilePath/Ambrosius_Bosschaert_the_Elder_(Dutch_-_Flower_Still_Life_-_Google_Art_Project.jpg?width=200" alt="Forest Letter" /></div><div><div class="a">JOURNAL</div><div class="t">김다은 인터뷰 — "방의 빛은 어떻게 그림이 되는가"</div></div><div class="p">8 min</div></div>
+          <div class="card"><div class="thumb"><img class="art-img" loading="lazy" referrerpolicy="no-referrer" src="https://commons.wikimedia.org/wiki/Special:FilePath/Johannes_Vermeer,_donna_col_liuto,_1662-63_ca._01.JPG?width=200" alt="Reading Lamp, Eight PM" /></div><div><div class="a">PROCESS</div><div class="t">스튜디오에서의 하루 — 작업 영상</div></div><div class="p">▶</div></div>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
+
+
+<div class="section-divider">
+  <span class="tag">04 / SYSTEM</span>
+  <span class="title">Quiet Atelier — Visual System</span>
+  <span class="crumb">DESIGN TOKENS</span>
+</div>
+<div class="frame">
+  <div class="chrome"><span class="dots"><span></span><span></span><span></span></span><span class="url">artilust.com/about/design-system</span></div>
+  <div class="page" style="padding: 60px 56px;">
+    <div style="display:grid; grid-template-columns: 5fr 7fr; gap: 36px; align-items:start;">
+      <div>
+        <div style="font-family:var(--sans); font-weight:500; font-size:10.5px; letter-spacing:0.22em; color:var(--crimson); text-transform:uppercase;">DESIGN PHILOSOPHY</div>
+        <h2 style="font-family:var(--display); font-weight: 500; font-size:42px; line-height:1.1; margin:14px 0;">Quiet Atelier — <em style="color:var(--crimson); font-style: italic; font-weight:400">조용한 아틀리에.</em></h2>
+        <p style="font-family:var(--sans); font-weight:300; font-size:15px; line-height:1.7; color:var(--ink-2); margin-bottom: 14px;">Reference 1(Spaceless Gallery)의 매거진 무게감과 Reference 3(Digital Art Gallery)의 화이트큐브 정밀함을 한 호흡으로 묶었습니다. 작품은 주인공, 디자인은 종업원. 한 화면 한 점의 Crimson Stamp가 아틀리에의 격조를 만듭니다.</p>
+      </div>
+      <div style="display:grid; grid-template-columns: repeat(5, 1fr); gap:0; border:1px solid var(--line);">
+        <div style="background:#F4EFE6; aspect-ratio: 1/1.4; display:flex; flex-direction:column; justify-content:flex-end; padding:14px; font-family:var(--sans); font-weight:300; font-size:10px; letter-spacing:0.05em;"><strong style="font-size:11px; font-weight:500">BONE</strong>#F4EFE6  ·  60%</div>
+        <div style="background:#FFFFFF; aspect-ratio: 1/1.4; display:flex; flex-direction:column; justify-content:flex-end; padding:14px; font-family:var(--sans); font-weight:300; font-size:10px;"><strong style="font-size:11px; font-weight:500">WHITE</strong>#FFFFFF  ·  20%</div>
+        <div style="background:#1F1E18; color: var(--bone); aspect-ratio: 1/1.4; display:flex; flex-direction:column; justify-content:flex-end; padding:14px; font-family:var(--sans); font-weight:300; font-size:10px;"><strong style="font-size:11px; font-weight:500">OLIVE INK</strong>#1F1E18  ·  15%</div>
+        <div style="background:#B23A2C; color: var(--bone); aspect-ratio: 1/1.4; display:flex; flex-direction:column; justify-content:flex-end; padding:14px; font-family:var(--sans); font-weight:300; font-size:10px;"><strong style="font-size:11px; font-weight:500">CRIMSON</strong>#B23A2C  ·  4%</div>
+        <div style="background:#8A857A; color: var(--bone); aspect-ratio: 1/1.4; display:flex; flex-direction:column; justify-content:flex-end; padding:14px; font-family:var(--sans); font-weight:300; font-size:10px;"><strong style="font-size:11px; font-weight:500">GREY</strong>#8A857A  ·  1%</div>
+      </div>
+    </div>
+
+    <div style="margin-top: 50px; display:grid; grid-template-columns: 1fr 1fr; gap: 36px;">
+      <div style="border:1px solid var(--line); background: var(--white); padding: 30px;">
+        <div style="font-family:var(--sans); font-weight:500; font-size:10.5px; letter-spacing:0.22em; color:var(--crimson); text-transform:uppercase;">TYPOGRAPHY  ·  NOTO SANS SYSTEM</div>
+        <div style="font-family:var(--display); font-weight:700; font-size:52px; line-height:1; margin-top:10px;">artilust</div>
+        <div style="font-family:var(--sans); font-weight:300; font-size:10px; color:var(--grey); letter-spacing:0.12em; margin-top:4px; text-transform:uppercase;">DISPLAY — NOTO SANS KR / 700</div>
+        <hr style="margin:18px 0; border:0; border-top:1px solid var(--line)"/>
+        <div style="font-family:var(--sans); font-weight:500; font-size:18px;">Today’s Curation — Quiet Atelier</div>
+        <div style="font-family:var(--sans); font-weight:300; font-size:10px; color:var(--grey); letter-spacing:0.12em; margin-top:4px; text-transform:uppercase;">HEADLINE — NOTO SANS KR / 500</div>
+        <hr style="margin:18px 0; border:0; border-top:1px solid var(--line)"/>
+        <div style="font-family:var(--sans); font-weight:400; font-size:14px;">180,000  ·  A2  ·  Ed. 50</div>
+        <div style="font-family:var(--sans); font-weight:300; font-size:10px; color:var(--grey); letter-spacing:0.12em; margin-top:4px; text-transform:uppercase;">META — NOTO SANS / 400 · TRACKED</div>
+      </div>
+      <div style="border:1px solid var(--line); background: var(--white); padding: 30px;">
+        <div style="font-family:var(--sans); font-weight:500; font-size:10.5px; letter-spacing:0.22em; color:var(--crimson); text-transform:uppercase;">COMPONENTS</div>
+        <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:14px;">
+          <button class="btn crimson"><span class="wax"></span>PRIMARY</button>
+          <button class="btn">SECONDARY</button>
+          <button class="btn ghost">GHOST</button>
+        </div>
+        <div style="display:flex; gap:8px; margin-top:18px; flex-wrap: wrap;">
+          <span class="pill">FILTER · MOOD</span>
+          <span class="pill crimson">PRICE · ₩180,000</span>
+          <span class="pill">SPACE · BEDROOM</span>
+        </div>
+        <hr style="margin:18px 0; border:0; border-top:1px solid var(--line)"/>
+        <div style="display:flex; align-items:center; gap:14px;">
+          <div style="width:50px; height:50px; border-radius:50%; background:var(--ink); color:var(--bone); display:flex; align-items:center; justify-content:center; font-family:var(--display); font-size:18px; font-weight:700; position:relative;">DE
+            <div style="position:absolute; top:2px; right:2px; width:8px; height:8px; border-radius:50%; background:var(--crimson)"></div>
+          </div>
+          <div>
+            <div style="font-family:var(--display); font-weight:600; font-size:18px;">김다은</div>
+            <div style="font-family:var(--sans); font-weight:300; font-size:10.5px; color:var(--grey); letter-spacing:0.08em; text-transform: uppercase;">Quiet Interior  ·  Blue</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="attrib">
+  <strong>이미지 출처 · Image Sources.</strong>  본 시각 시안에 사용된 24점의 작품 이미지는 모두 <a href="https://commons.wikimedia.org/" target="_blank" rel="noopener">Wikimedia Commons</a>의 퍼블릭 도메인 작품입니다 (저작권 만료). 본 자료는 artilust 기획서의 시각 검증용으로만 사용되며, 실제 몰 런칭 시에는 입점 작가의 작품으로 100% 교체됩니다.<br><br>
+
+  <strong>Johannes Vermeer</strong> — <em>Girl Reading a Letter at an Open Window</em>  ·  <a href="https://commons.wikimedia.org/wiki/File:Jan_Vermeer_-_Girl_Reading_a_Letter_at_an_Open_Window.JPG" target="_blank" rel="noopener">Commons</a> &nbsp;|&nbsp;  <strong>Jan van Huysum</strong> — <em>Still Life of Flowers and Fruit</em>  ·  <a href="https://commons.wikimedia.org/wiki/File:Jan_van_Huysum_-_Still_Life_of_Flowers_and_Fruit_-_Google_Art_Project.jpg" target="_blank" rel="noopener">Commons</a> &nbsp;|&nbsp;  <strong>Jan Davidsz. de Heem</strong> — <em>Still-life with Books and Skull (Vanitas)</em>  ·  <a href="https://commons.wikimedia.org/wiki/File:Jan_Davidszoon_de_Heem,_Still-life_with_Books_and_Skull_(Vanitas).JPG" target="_blank" rel="noopener">Commons</a> &nbsp;|&nbsp;  <strong>After Hokusai</strong> — <em>Sparrow and Magnolia</em>  ·  <a href="https://commons.wikimedia.org/wiki/File:Sparrow_and_magnolia-IMG_9330.JPG" target="_blank" rel="noopener">Commons</a> &nbsp;|&nbsp;  <strong>Alfons Mucha</strong> — <em>Fruit (1897)</em>  ·  <a href="https://commons.wikimedia.org/wiki/File:Alfons_Mucha_-_Fruit.jpg" target="_blank" rel="noopener">Commons</a> &nbsp;|&nbsp;  <strong>Utagawa Hiroshige</strong> — <em>Fox Fires on New Year's Eve (100 Views of Edo)</em>  ·  <a href="https://commons.wikimedia.org/wiki/File:Hiroshige-100-views-of-edo-fox-fires.jpg" target="_blank" rel="noopener">Commons</a> &nbsp;|&nbsp;  <strong>Pierre-Joseph Redouté</strong> — <em>Rosa centifolia foliacea</em>  ·  <a href="https://commons.wikimedia.org/wiki/File:Redoute_-_Rosa_centifolia_foliacea.jpg" target="_blank" rel="noopener">Commons</a> &nbsp;|&nbsp;  <strong>Henri de Toulouse-Lautrec</strong> — <em>À Montrouge — Rosa la Rouge</em>  ·  <a href="https://commons.wikimedia.org/wiki/File:Toulouse_Lautrec_A-Montrouge_Rosa_la_Rouge.jpg" target="_blank" rel="noopener">Commons</a> &nbsp;|&nbsp;  <strong>Johannes Vermeer</strong> — <em>The Lacemaker (c.1669–1671)</em>  ·  <a href="https://commons.wikimedia.org/wiki/File:Johannes_Vermeer_-_The_lacemaker_(c.1669-1671).jpg" target="_blank" rel="noopener">Commons</a> &nbsp;|&nbsp;  <strong>Pierre-Joseph Redouté</strong> — <em>Tulip Study</em>  ·  <a href="https://commons.wikimedia.org/wiki/File:Tulip_redoute.JPG" target="_blank" rel="noopener">Commons</a> &nbsp;|&nbsp;  <strong>Katsushika Hokusai</strong> — <em>Fine Wind, Clear Morning (Gaifū Kaisei)</em>  ·  <a href="https://commons.wikimedia.org/wiki/File:Katsushika_Hokusai_-_Fine_Wind,_Clear_Morning_(Gaif%C5%AB_kaisei)_-_Google_Art_Project.jpg" target="_blank" rel="noopener">Commons</a> &nbsp;|&nbsp;  <strong>Anonymous (Orient Express)</strong> — <em>Paris — Vintage Travel Poster</em>  ·  <a href="https://commons.wikimedia.org/wiki/File:Vintage_Travel_Poster_Paris_France_Orient_Express.svg" target="_blank" rel="noopener">Commons</a> &nbsp;|&nbsp;  <strong>Suzuki Harunobu</strong> — <em>Illustration of a Poem by Kiyohara no Motosuke</em>  ·  <a href="https://commons.wikimedia.org/wiki/File:Illustration_of_a_Poem_by_Kiyohara_no_Motosuke,_by_Suzuki_Harunobu,_Edo_period,_18th_century_-_Tokyo_National_Museum_-_DSC06279.JPG" target="_blank" rel="noopener">Commons</a> &nbsp;|&nbsp;  <strong>Pieter Claesz</strong> — <em>Vanitas Still Life (1625)</em>  ·  <a href="https://commons.wikimedia.org/wiki/File:Pieter_Claeszoon-_Vanitas_-_Still_Life_(1625,_29,5_x_34,5_cm).JPG" target="_blank" rel="noopener">Commons</a> &nbsp;|&nbsp;  <strong>Ambrosius Bosschaert the Elder</strong> — <em>Flower Still Life</em>  ·  <a href="https://commons.wikimedia.org/wiki/File:Ambrosius_Bosschaert_the_Elder_(Dutch_-_Flower_Still_Life_-_Google_Art_Project.jpg" target="_blank" rel="noopener">Commons</a> &nbsp;|&nbsp;  <strong>Henri de Toulouse-Lautrec</strong> — <em>Two Friends</em>  ·  <a href="https://commons.wikimedia.org/wiki/File:Henri_R._de_Toulouse-Lautrec_-_Two_Friends_-_Google_Art_Project.jpg" target="_blank" rel="noopener">Commons</a> &nbsp;|&nbsp;  <strong>John F. Francis</strong> — <em>Still Life, Fruit and Wine Glass</em>  ·  <a href="https://commons.wikimedia.org/wiki/File:John_F._Francis_-_Still_life,_fruit_and_wine_glass.jpg" target="_blank" rel="noopener">Commons</a> &nbsp;|&nbsp;  <strong>Jan van Huysum</strong> — <em>Flower Still Life (c.1734)</em>  ·  <a href="https://commons.wikimedia.org/wiki/File:Jan_van_Huysum_-_Flower_Still_Life,_c._1734_-_Google_Art_Project.jpg" target="_blank" rel="noopener">Commons</a> &nbsp;|&nbsp;  <strong>Henri de Toulouse-Lautrec</strong> — <em>In Bed — The Kiss</em>  ·  <a href="https://commons.wikimedia.org/wiki/File:Toulouse_Lautrec_In_bed_the_kiss.jpg" target="_blank" rel="noopener">Commons</a> &nbsp;|&nbsp;  <strong>Henri de Toulouse-Lautrec</strong> — <em>Les Jockeys</em>  ·  <a href="https://commons.wikimedia.org/wiki/File:Henri_de_Toulouse-Lautrec_-_Les_jockeys.jpg" target="_blank" rel="noopener">Commons</a> &nbsp;|&nbsp;  <strong>Katsushika Hokusai</strong> — <em>The Great Wave off Kanagawa (1830–32)</em>  ·  <a href="https://commons.wikimedia.org/wiki/File:Hokusai,_trentasei_vedute_del_monte_fuji,_sotto_la_grande_onda_al_largo_della_costa_di_kanagawa,_1830-32.JPG" target="_blank" rel="noopener">Commons</a> &nbsp;|&nbsp;  <strong>Johannes Vermeer</strong> — <em>Woman with a Lute (c.1662–63)</em>  ·  <a href="https://commons.wikimedia.org/wiki/File:Johannes_Vermeer,_donna_col_liuto,_1662-63_ca._01.JPG" target="_blank" rel="noopener">Commons</a> &nbsp;|&nbsp;  <strong>Willem van Aelst</strong> — <em>Flower Still-life</em>  ·  <a href="https://commons.wikimedia.org/wiki/File:'Flower_Still-life'_by_Willem_van_Aelst,_Cincinnati_Art_Museum.JPG" target="_blank" rel="noopener">Commons</a> &nbsp;|&nbsp;  <strong>Henri de Toulouse-Lautrec</strong> — <em>Clown</em>  ·  <a href="https://commons.wikimedia.org/wiki/File:Alte_Nationalgalerie,_Henri_de_Toulouse-Lautrec,_Clown.JPG" target="_blank" rel="noopener">Commons</a>
+
+
+
+  <strong>Space photographs.</strong>  Shop by Space 섹션의 6개 공간 사진은 <a href="https://unsplash.com" target="_blank">Unsplash</a>의 무료 라이선스 이미지입니다 (저작자 표기). 실제 런칭 시에는 입점 작가 작품이 적용된 자체 공간 촬영컷으로 100% 교체됩니다.<br><br>
+  <strong>[Space · 거실]</strong> Clay Banks — <em>Cozy living room with leather sofa and fireplace</em>  ·  <a href="https://unsplash.com/photos/cozy-living-room-with-leather-sofa-and-fireplace-2JbmNqZxeDs" target="_blank" rel="noopener">Unsplash</a> &nbsp;|&nbsp; <strong>[Space · 침실]</strong> Prydumano Design — <em>A bedroom with a bed and a table</em>  ·  <a href="https://unsplash.com/photos/a-bedroom-with-a-bed-and-a-table-in-it-qPHpk6G9nik" target="_blank" rel="noopener">Unsplash</a> &nbsp;|&nbsp; <strong>[Space · 서재]</strong> Li Zhang — <em>Modern desk setup with a window and bookshelf</em>  ·  <a href="https://unsplash.com/photos/modern-desk-setup-with-a-window-and-bookshelf-6ByiZEftNrc" target="_blank" rel="noopener">Unsplash</a> &nbsp;|&nbsp; <strong>[Space · 아이방]</strong> Collov Home Design — <em>White wooden bed frame — kids bedroom</em>  ·  <a href="https://unsplash.com/photos/white-wooden-bed-frame-with-white-bed-linen-wN63YFU_JXk" target="_blank" rel="noopener">Unsplash</a> &nbsp;|&nbsp; <strong>[Space · 카페]</strong> Kouji Tsuru — <em>A cozy cafe interior with warm lighting and furniture</em>  ·  <a href="https://unsplash.com/photos/a-cozy-cafe-interior-with-warm-lighting-and-furniture-0i5clWZBit0" target="_blank" rel="noopener">Unsplash</a> &nbsp;|&nbsp; <strong>[Space · 오피스]</strong> Huy Phan — <em>A modern and well-organized home office</em>  ·  <a href="https://unsplash.com/photos/a-modern-and-well-organized-home-office-eIioBNJFufI" target="_blank" rel="noopener">Unsplash</a>
+</div>
+
+<div class="doc-foot">
+  artilust — Quiet Atelier for Illustration Editions  ·  Visual Mockup v2  ·  © 2026 ㈜SALT&amp;PEPPER
+</div>
+
+</body>
+</html>
